@@ -1,8 +1,8 @@
 <template>
   <a-row class="navbar" align="middle">
     <div class="collapse-trigger hover-effect" @click="toggleCollapse">
-      <MenuUnfoldOutlined v-show="isCollapse" />
-      <MenuFoldOutlined v-show="!isCollapse" />
+      <MenuUnfoldOutlined v-if="isCollapse" />
+      <MenuFoldOutlined v-else />
     </div>
     <a-breadcrumb>
       <a-breadcrumb-item>Ant Design Vue</a-breadcrumb-item>
