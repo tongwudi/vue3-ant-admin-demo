@@ -1,14 +1,14 @@
 <template>
   <router-link class="logo" to="/" title="桐无敌">
     <img :src="logoSrc" />
-    <h1 class="truncate" v-if="!collapsed">桐无敌</h1>
+    <h1 class="truncate" v-show="showTitle">桐无敌</h1>
   </router-link>
 </template>
 
 <script lang="ts" setup>
 const logoSrc = require('@/assets/img/logo.png')
 
-defineProps({ collapsed: Boolean })
+defineProps({ showTitle: Boolean })
 </script>
 
 <style lang="scss" scoped>

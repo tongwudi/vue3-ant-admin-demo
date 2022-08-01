@@ -27,12 +27,11 @@ const closeTag = (targetKey: string) => {
 
 <style lang="scss" scoped>
 .nav-tabs {
-  padding: 6px 10px;
+  padding: 8px 10px;
   background-color: #fff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.08);
 }
-
-::v-deep .ant-tabs-nav {
+:deep(.ant-tabs > .ant-tabs-nav) {
   margin: 0;
   &::before {
     border-bottom: 0;

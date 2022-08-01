@@ -3,12 +3,19 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+const app = createApp(App)
+
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+import * as Icons from "@ant-design/icons-vue"
+const data: any = Icons
+for (const i in data) {
+  app.component(i, data[i])
+}
 
 import '@/assets/styles/index.scss'
+import '@/router/permission'
 
-const app = createApp(App)
 app
   .use(router)
   .use(store)

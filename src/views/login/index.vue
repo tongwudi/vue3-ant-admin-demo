@@ -55,12 +55,15 @@
 <script lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { useStore } from 'vuex'
+// import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { login } from '../../api'
+
 export default {
-  components: {
-    UserOutlined,
-    LockOutlined
-  },
+  // components: {
+  //   UserOutlined,
+  //   LockOutlined
+  // },
   setup() {
     interface FormState {
       username: string
@@ -79,9 +82,14 @@ export default {
     }
 
     const router = useRouter()
-    const onFinish = (values: any) => {
-      console.log('Success:', values)
-      router.replace('/')
+    const store = useStore()
+    const onFinish = async (values: any) => {
+      login(values).then((res: any) => {
+        if (res.code === 200) {
+          store.commit('setToken', res.data.token)
+          router.replace('/')
+        }
+      })
     }
 
     return {

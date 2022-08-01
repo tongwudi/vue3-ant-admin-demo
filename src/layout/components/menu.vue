@@ -46,21 +46,21 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue'
-import {
-  PieChartOutlined,
-  MailOutlined,
-  DesktopOutlined,
-  InboxOutlined,
-  AppstoreOutlined
-} from '@ant-design/icons-vue'
+// import {
+//   PieChartOutlined,
+//   MailOutlined,
+//   DesktopOutlined,
+//   InboxOutlined,
+//   AppstoreOutlined
+// } from '@ant-design/icons-vue'
 export default {
-  components: {
-    PieChartOutlined,
-    MailOutlined,
-    DesktopOutlined,
-    InboxOutlined,
-    AppstoreOutlined
-  },
+  // components: {
+  //   PieChartOutlined,
+  //   MailOutlined,
+  //   DesktopOutlined,
+  //   InboxOutlined,
+  //   AppstoreOutlined
+  // },
   setup() {
     const state = reactive({
       selectedKeys: ['6'],

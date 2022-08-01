@@ -1,4 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
+const path = require('path')
+
 module.exports = defineConfig({
   transpileDependencies: true,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
@@ -16,12 +18,20 @@ module.exports = defineConfig({
     }
   },
   devServer: {
-    // proxy: {
-    //   '/api': {
-    //     target: '<url>',
-    //     ws: true, // 是否支持websocket
-    //     changeOrigin: true // 是否跨域
-    //   },
-    // },
-  },
+    // open: true //配置自动启动浏览器
+    // port: 8090, // 端口号
+    // host: '0.0.0.0', // 本地和局域网
+    // // host: 'localhost', // 只有本地
+    // https: false, // https:{type:Boolean}
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        // ws: true, // 是否支持websocket
+        // changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api': '' //重写路径
+        }
+      }
+    }
+  }
 })

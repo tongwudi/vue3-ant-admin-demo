@@ -2,22 +2,23 @@
   <a-layout>
     <a-layout-sider
       theme="dark"
-      v-model:collapsed="collapsed"
+      breakpoint="lg"
       :width="220"
-      collapsible
-      :collapsedWidth="60"
-      @collapse="toggleCollapse"
+      v-model:collapsed="collapsed"
+      :collapsedWidth="collapsedWidth"
+      :trigger="null"
+      @breakpoint="onBreakpoint"
     >
-      <Logo :collapsed="collapsed" />
+      <Logo :showTitle="!collapsed" />
 
       <Menu />
     </a-layout-sider>
     <a-layout
       class="main"
-      :style="{ marginLeft: collapsed ? '60px' : '220px' }"
+      :style="{ marginLeft: (collapsed ? collapsedWidth : 220) + 'px' }"
     >
       <a-layout-header>
-        <Navbar />
+        <Navbar @toggleCollapse="toggleCollapse" />
       </a-layout-header>
       <a-layout-content>
         <Tabbar />
@@ -27,8 +28,8 @@
   </a-layout>
 </template>
 
-<script setup lang="ts">
-import { ref, provide } from 'vue'
+<script lang="ts">
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 import Logo from './components/logo.vue'
@@ -36,12 +37,35 @@ import Menu from './components/menu.vue'
 import Navbar from './components/navbar.vue'
 import Tabbar from './components/tabbar.vue'
 
-const store = useStore()
-const collapsed = ref<boolean>(false)
-provide('collapsed', collapsed)
+export default {
+  components: { Logo, Menu, Navbar, Tabbar },
+  setup() {
+    const collapsed = ref(false)
 
-const toggleCollapse = () => {
-  store.commit('toggleCollapse', !collapsed.value)
+    const brokenRef = ref<Boolean>(false)
+
+    const onBreakpoint = (broken: boolean) => {
+      brokenRef.value = broken
+    }
+
+    const collapsedWidth = computed(() => {
+      return brokenRef.value ? 0 : 50
+    })
+
+    const { commit } = useStore()
+    const toggleCollapse = () => {
+      collapsed.value = !collapsed.value
+      commit('toggleCollapse', collapsed.value)
+    }
+
+    return {
+      collapsed,
+      brokenRef,
+      onBreakpoint,
+      collapsedWidth,
+      toggleCollapse
+    }
+  }
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <a-row class="navbar" align="middle">
     <div class="collapse-trigger hover-effect" @click="toggleCollapse">
-      <MenuUnfoldOutlined v-if="isCollapse" />
+      <MenuUnfoldOutlined v-if="collapsed" />
       <MenuFoldOutlined v-else />
     </div>
     <a-breadcrumb>
@@ -74,21 +74,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined
-} from '@ant-design/icons-vue'
+// import {
+//   MenuFoldOutlined,
+//   MenuUnfoldOutlined,
+//   UserOutlined
+// } from '@ant-design/icons-vue'
 
 // const avatarSrc = require('@/assets/img/avatar.png')
 const avatarSrc =
   'https://s2.loli.net/2022/04/07/gw1L2Z5sPtS8GIl.gif?imageView2/1/w/80/h/80'
 
 const store = useStore()
-const isCollapse = computed(() => store.state.isCollapse)
 
+const collapsed = computed(() => store.state.collapsed)
+
+const emit = defineEmits(['toggleCollapse'])
 const toggleCollapse = () => {
-  store.commit('toggleCollapse', !isCollapse.value)
+  emit('toggleCollapse')
 }
 </script>
 
@@ -97,9 +99,11 @@ const toggleCollapse = () => {
   height: 100%;
 }
 .collapse-trigger {
+  width: $nav-height;
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   .anticon {
     font-size: 16px;
     color: #000;
@@ -110,12 +114,12 @@ const toggleCollapse = () => {
   display: flex;
   align-items: center;
   .dropdown-text {
-    margin-left: 7px;
+    margin-left: 8px;
     vertical-align: middle;
   }
 }
 .collapse-trigger,
-.ant-breadcrumb,
+// .ant-breadcrumb,
 .dropdown-trigger {
   padding: 0 10px;
 }
